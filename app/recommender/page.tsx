@@ -1,3 +1,5 @@
+"use client"
+
 import { RecommendationPanel } from "@/components/recommendations/recommendation-panel"
 import { InteractionLog } from "@/components/recommendations/interaction-log"
 import { DarkModeToggle } from "@/components/dark-mode-toggle"
