@@ -161,14 +161,3 @@ DATABASE_URL=postgresql://USER:PASSWORD@HOST/DB?sslmode=require
 ENABLE_AI_EXPLANATION=false
 \`\`\`
 
-## License
-
-MIT License - see LICENSE file for details
-
-## Contributing
-
-Contributions welcome! Fork the repo, create a feature branch, and submit a pull request.
-
----
-
-**Built with Next.js, Neon, and Vercel AI SDK** | Version 1.0.0
