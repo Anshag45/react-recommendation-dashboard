@@ -1,8 +1,16 @@
 "use client"
 
+import dynamic from "next/dynamic"
 import { RecommendationPanel } from "@/components/recommendations/recommendation-panel"
 import { InteractionLog } from "@/components/recommendations/interaction-log"
-import { DarkModeToggle } from "@/components/dark-mode-toggle"
+
+const DarkModeToggle = dynamic(
+  () => import("@/components/dark-mode-toggle").then((mod) => ({ default: mod.DarkModeToggle })),
+  {
+    ssr: false,
+    loading: () => <div className="w-10 h-10" />,
+  },
+)
 
 export default function RecommenderPage() {
   return (
