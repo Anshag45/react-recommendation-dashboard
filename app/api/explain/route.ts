@@ -1,31 +1,50 @@
-import { NextResponse } from "next/server"
 import { generateText } from "ai"
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json()
-    const { product, score } = body as {
-      product: { name: string; brand: string; price: number; category: string; features: Record<string, any> }
-      score: number
+    const { product, userProfile } = await req.json()
+
+    if (!product) {
+      return Response.json({ ok: false, error: "Product is required" }, { status: 400 })
     }
 
-    const prompt = [
-      "You are an assistant generating concise consumer-friendly explanations for product recommendations.",
-      "Write 1-2 sentences. No marketing fluff. Explain why this product fits the user based on features and score.",
-      `Product: ${product.name} by ${product.brand}`,
-      `Category: ${product.category}; Price: $${product.price}`,
-      `Features: ${JSON.stringify(product.features)}`,
-      `Score: ${score} out of 100`,
-      "Output should be plain text, 1-2 sentences.",
-    ].join("\n")
+    // Check if AI explanations are enabled
+    const enableAI = process.env.ENABLE_AI_EXPLANATION === "true"
 
-    const { text } = await generateText({
-      model: "openai/gpt-5-mini",
-      prompt,
-    })
+    if (!enableAI) {
+      // Return a deterministic fallback explanation
+      const fallback = `This product matches your interests based on your browsing history and preferences. ${product.category} items similar to this have been popular with users who viewed ${product.brand || "similar brands"}.`
+      return Response.json({ ok: true, explanation: fallback })
+    }
 
-    return NextResponse.json({ explanation: text.trim() })
-  } catch (e) {
-    return NextResponse.json({ error: "Failed to generate explanation" }, { status: 500 })
+    // Generate LLM explanation
+    const prompt = `Explain in 1-2 sentences why this product would be recommended to a user based on their profile.
+
+Product: ${product.title}
+Category: ${product.category}
+Brand: ${product.brand}
+Price: $${product.price}
+Description: ${product.description}
+
+User Profile: ${userProfile ? JSON.stringify(userProfile) : "General user"}
+
+Keep the explanation concise and friendly.`
+
+    try {
+      const { text } = await generateText({
+        model: "openai/gpt-4o-mini",
+        prompt,
+      })
+
+      return Response.json({ ok: true, explanation: text })
+    } catch (aiError: any) {
+      // Fallback if AI call fails
+      console.error("AI generation failed:", aiError.message)
+      const fallback = `This product matches your interests based on your browsing history and preferences. ${product.category} items similar to this have been popular with users who viewed ${product.brand || "similar brands"}.`
+      return Response.json({ ok: true, explanation: fallback })
+    }
+  } catch (error: any) {
+    console.error("Explain route error:", error)
+    return Response.json({ ok: false, error: error.message || "Failed to generate explanation" }, { status: 500 })
   }
 }

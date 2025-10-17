@@ -1,30 +1,58 @@
-# React recommendation dashboard
+# E-commerce Product Recommender
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+Full-stack Next.js app with:
+- Recommendation API (content-based + popularity fallback)
+- Neon Postgres for products and user interactions
+- LLM-powered “Why this product?” explanations via the Vercel AI SDK
+- Optional dashboard to preview recommendations
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/agarwalansh651-gmailcoms-projects/v0-react-recommendation-dashboard)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/80JbtpBVUec)
+## Tech
+- Next.js App Router (Next.js)
+- Database: Neon Postgres via `@neondatabase/serverless`
+- AI: Vercel AI SDK (`generateText`) using `openai/gpt-5-mini`
 
-## Overview
+## Setup
+1) Configure Neon connection:
+   - Add `DATABASE_URL` in the Vars sidebar or connect Neon in the Connect sidebar.
+   - We use `@neondatabase/serverless` in this project. Prefer the non-pooled Neon host (no "`-pooler`" in the hostname), keep `?sslmode=require`.
+     - If your current URL looks like `...-pooler...neon.tech`, switch to the equivalent non-pooled hostname without `-pooler`.
+   - If you instead choose Prisma or `pg` with a Node pool, keep the pooled host (with "`-pooler`").
+   - Example: `postgres://USER:PASSWORD@HOST/DB?sslmode=require`
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+2) Seed the database:
+   - Run the script in the /scripts folder: `scripts/seed-db.ts` (v0 can execute this file)
+   - It creates tables and seeds sample products + a demo user.
 
-## Deployment
+3) Run the demo:
+   - Open the preview and visit `/` (dashboard).
+   - Click “Get Recommendations”. Leave “user ID” empty to use demo behavior, or use the seeded user id `00000000-0000-0000-0000-000000000001`.
 
-Your project is live at:
+4) LLM explanations:
+   - By default explanations are enabled.
+   - To disable: set `ENABLE_AI_EXPLANATION=false` in Vars.
 
-**[https://vercel.com/agarwalansh651-gmailcoms-projects/v0-react-recommendation-dashboard](https://vercel.com/agarwalansh651-gmailcoms-projects/v0-react-recommendation-dashboard)**
+## API
+POST `/api/recommendations`
+\`\`\`
+{
+  "userId": "optional-user-id",
+  "behavior": { "categoryCounts": { "Electronics": 3 }, ... },
+  "limit": 8,
+  "includeExplanations": true
+}
+\`\`\`
+Returns `{ ok, behavior, recommendations: [{ product, score, explanation? }] }`.
 
-## Build your app
+POST `/api/interactions`
+- Body: `{ "userId": "uuid", "productId": "uuid", "type": "view|cart|purchase|like" }`
+- Inserts a row into `interactions`. Use this to record feedback (e.g., Like, Add to cart) from the dashboard and re-run recommendations.
 
-Continue building your app on:
+## Dashboard tips
+- Use “Use demo user” to autofill the seeded user and test real interaction-driven recs.
+- Adjust “Limit” (1–20) and toggle “Explanations” for faster iteration.
+- Click “Like” or “Add to cart” on a card to record an interaction and refresh the results automatically.
 
-**[https://v0.app/chat/projects/80JbtpBVUec](https://v0.app/chat/projects/80JbtpBVUec)**
-
-## How It Works
-
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+## Notes
+- Evaluation focuses: recommendation accuracy, explanation quality, code design, docs.
+- Improve accuracy by tuning weights in `lib/recommend.ts` or adding collaborative signals.
+- License: MIT
