@@ -161,9 +161,6 @@ DATABASE_URL=postgresql://USER:PASSWORD@HOST/DB?sslmode=require
 ENABLE_AI_EXPLANATION=false
 \`\`\`
 
-## License
-
-MIT License - see LICENSE file for details
 
 ## Contributing
 
