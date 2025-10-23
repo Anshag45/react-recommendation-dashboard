@@ -3,6 +3,9 @@
 import dynamic from "next/dynamic"
 import { RecommendationPanel } from "@/components/recommendations/recommendation-panel"
 import { InteractionLog } from "@/components/recommendations/interaction-log"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import { BarChart3 } from "lucide-react"
 
 const DarkModeToggle = dynamic(
   () => import("@/components/dark-mode-toggle").then((mod) => ({ default: mod.DarkModeToggle })),
@@ -24,7 +27,15 @@ export default function RecommenderPage() {
               Personalized product recommendations with AI-powered explanations
             </p>
           </div>
-          <DarkModeToggle />
+          <div className="flex items-center gap-2">
+            <Link href="/evaluation">
+              <Button variant="outline" size="sm" className="gap-2 bg-transparent">
+                <BarChart3 className="h-4 w-4" />
+                <span className="hidden sm:inline">Evaluation</span>
+              </Button>
+            </Link>
+            <DarkModeToggle />
+          </div>
         </div>
       </header>
 

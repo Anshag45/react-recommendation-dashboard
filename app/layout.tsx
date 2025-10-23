@@ -11,7 +11,7 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Indian E-commerce Recommender",
   description: "Personalized product recommendations with AI-powered explanations",
-  generator: "v0.app",
+    generator: 'v0.app'
 }
 
 export default function RootLayout({

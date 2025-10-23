@@ -87,5 +87,13 @@ export function scoreProducts(
     return { product: p, score }
   })
 
-  return scored.sort((a, b) => b.score - a.score).slice(0, limit)
+  const sortedByScore = scored.sort((a, b) => b.score - a.score)
+  const maxScore = sortedByScore[0]?.score || 1
+  const minScore = sortedByScore[sortedByScore.length - 1]?.score || 0
+  const scoreRange = maxScore - minScore || 1
+
+  return sortedByScore.slice(0, limit).map((item) => ({
+    ...item,
+    score: ((item.score - minScore) / scoreRange) * 100, // normalize to 0-100
+  }))
 }

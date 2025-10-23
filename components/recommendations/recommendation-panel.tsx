@@ -73,6 +73,10 @@ export function RecommendationPanel() {
       })
       return
     }
+    toast({
+      title: "Saved!",
+      description: `${type === "cart" ? "Added to cart" : "Liked"} successfully.`,
+    })
     try {
       const res = await fetch("/api/interactions", {
         method: "POST",
@@ -81,7 +85,6 @@ export function RecommendationPanel() {
       })
       const data = await res.json()
       if (!data.ok) throw new Error(data.error || "Interaction failed")
-      toast({ title: "Saved", description: `Recorded ${type} on product.` })
       await runDemo()
     } catch (e: any) {
       toast({ title: "Error", description: e.message || "Failed to record interaction" })

@@ -3,18 +3,20 @@ values
   ('00000000-0000-0000-0000-000000000001','demo@example.com')
 on conflict (id) do nothing;
 
--- Indian products with INR prices and realistic brands
+-- Indian products with INR prices, realistic brands, and product images
 insert into products (id, title, description, category, brand, price, tags, popularity, image_url) values
-  ('10000000-0000-0000-0000-000000000001','boAt Rockerz 450 Bluetooth Headphones','Premium wireless headphones with 40-hour battery life and ANC','Electronics','boAt',1499, array['audio','wireless','headphones'], 85, null),
-  ('10000000-0000-0000-0000-000000000002','Mi Power Bank 20000mAh','Fast charging power bank with dual USB ports','Electronics','Mi',1999, array['power','battery','portable'], 90, null),
-  ('10000000-0000-0000-0000-000000000003','Noise ColorFit Pulse 2 Smartwatch','AMOLED display smartwatch with 100+ watch faces','Electronics','Noise',2799, array['watch','fitness','wearable'], 78, null),
-  ('10000000-0000-0000-0000-000000000004','Campus Drift Sneakers','Comfortable casual sneakers for everyday wear','Fashion','Campus',1299, array['shoes','casual','sneakers'], 72, null),
-  ('10000000-0000-0000-0000-000000000005','Puma Active T-Shirt','Breathable cotton blend sports t-shirt','Fashion','Puma',899, array['clothing','sports','tshirt'], 68, null),
-  ('10000000-0000-0000-0000-000000000006','Realme Buds Wireless 2 Neo','Lightweight wireless earbuds with 20-hour battery','Electronics','Realme',1399, array['audio','wireless','earbuds'], 82, null),
-  ('10000000-0000-0000-0000-000000000007','Fastrack Reflex Play Smartwatch','Sports smartwatch with 100+ sports modes','Electronics','Fastrack',4999, array['watch','sports','wearable'], 75, null),
-  ('10000000-0000-0000-0000-000000000008','boAt Airdopes 141 Earbuds','True wireless earbuds with 6-hour battery','Electronics','boAt',1299, array['audio','wireless','earbuds'], 88, null),
-  ('10000000-0000-0000-0000-000000000009','Mi Band 7 Fitness Tracker','Lightweight fitness tracker with 14-day battery','Electronics','Mi',2499, array['fitness','wearable','tracker'], 80, null),
-  ('10000000-0000-0000-0000-000000000010','Noise Evolve 2 Smartwatch','Premium smartwatch with SpO2 monitoring','Electronics','Noise',3999, array['watch','health','wearable'], 76, null)
+  ('10000000-0000-0000-0000-000000000001','ACME Wireless Headphones Pro','Premium over-ear wireless headphones with active noise cancellation and 20-hour battery life','Electronics','ACME',3499, array['audio','wireless','headphones','premium'], 92, '/placeholder.svg?height=160&width=320'),
+  ('10000000-0000-0000-0000-000000000002','boAt Rockerz 450 Bluetooth Headphones','Premium wireless headphones with 40-hour battery life and ANC','Electronics','boAt',2499, array['audio','wireless','headphones'], 85, '/placeholder.svg?height=160&width=320'),
+  ('10000000-0000-0000-0000-000000000003','Logitech MX Master 3S Mouse','Advanced wireless mouse with precision scrolling and customizable buttons','Electronics','Logitech',7999, array['mouse','wireless','productivity'], 88, '/placeholder.svg?height=160&width=320'),
+  ('10000000-0000-0000-0000-000000000004','Mi Power Bank 20000mAh','Fast charging power bank with dual USB ports and 18W output','Electronics','Mi',1999, array['power','battery','portable'], 90, '/placeholder.svg?height=160&width=320'),
+  ('10000000-0000-0000-0000-000000000005','Noise ColorFit Pulse 2 Smartwatch','AMOLED display smartwatch with 100+ watch faces and health tracking','Electronics','Noise',2799, array['watch','fitness','wearable'], 78, '/placeholder.svg?height=160&width=320'),
+  ('10000000-0000-0000-0000-000000000006','Campus Drift Sneakers','Comfortable casual sneakers for everyday wear with premium cushioning','Fashion','Campus',1299, array['shoes','casual','sneakers'], 72, '/placeholder.svg?height=160&width=320'),
+  ('10000000-0000-0000-0000-000000000007','Puma Active T-Shirt','Breathable cotton blend sports t-shirt with moisture-wicking technology','Fashion','Puma',1199, array['clothing','sports','tshirt'], 68, '/placeholder.svg?height=160&width=320'),
+  ('10000000-0000-0000-0000-000000000008','Realme Buds Wireless 2 Neo','Lightweight wireless earbuds with 20-hour battery and fast charging','Electronics','Realme',1399, array['audio','wireless','earbuds'], 82, '/placeholder.svg?height=160&width=320'),
+  ('10000000-0000-0000-0000-000000000009','Fastrack Reflex Play Smartwatch','Sports smartwatch with 100+ sports modes and 7-day battery','Electronics','Fastrack',4999, array['watch','sports','wearable'], 75, '/placeholder.svg?height=160&width=320'),
+  ('10000000-0000-0000-0000-000000000010','Mi Backpack Pro','Durable laptop backpack with multiple compartments and USB charging port','Fashion','Mi',2499, array['backpack','travel','storage'], 80, '/placeholder.svg?height=160&width=320'),
+  ('10000000-0000-0000-0000-000000000011','Noise Evolve 2 Smartwatch','Premium smartwatch with SpO2 monitoring and always-on display','Electronics','Noise',3999, array['watch','health','wearable'], 76, '/placeholder.svg?height=160&width=320'),
+  ('10000000-0000-0000-0000-000000000012','ACME Studio Headphones','Professional-grade studio headphones with flat frequency response','Electronics','ACME',5999, array['audio','professional','headphones','studio'], 89, '/placeholder.svg?height=160&width=320')
 on conflict (id) do nothing;
 
 -- sample interactions for the demo user with Indian products
