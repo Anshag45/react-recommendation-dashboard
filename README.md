@@ -299,14 +299,8 @@ ENABLE_AI_EXPLANATION=false
 - Comprehensive error handling
 - Performance optimizations
 
-## License
-
-MIT License - see LICENSE file for details
 
 ## Contributing
 
 Contributions welcome! Fork the repo, create a feature branch, and submit a pull request.
 
----
-
-**Built with Next.js, Neon, and Vercel AI SDK** | Version 2.0.0 | Indian E-commerce Recommender
